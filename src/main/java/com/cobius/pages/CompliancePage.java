@@ -36,6 +36,9 @@ public class CompliancePage {
     @FindBy(id = "DeleteEventButton")
     WebElement deleteEventButton;
 
+    @FindBy(css = "button.btn-danger")
+    WebElement deleteEventConfirmButton;
+
     @FindBy(id = "EventDate")
     WebElement eventDate;
 
@@ -137,6 +140,8 @@ public class CompliancePage {
     public CompliancePage deleteEvent() {
         wait.until(elementToBeClickable(deleteEventButton));
         deleteEventButton.click();
+        wait.until(visibilityOf(deleteEventConfirmButton));
+        deleteEventConfirmButton.click();
         return this;
     }
 }

@@ -1,6 +1,7 @@
 package com.cobius.pages;
 
 import com.cobius.constant.Constants;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,7 +36,8 @@ public class DashboardPage {
         PageFactory.initElements(driver, this);
     }
 
-    public DashboardPage logout(){
+    public DashboardPage logout() throws InterruptedException {
+        Thread.sleep(5000);
         wait.until(elementToBeClickable(profileDropdown));
         profileDropdown.click();
         wait.until(elementToBeClickable(logoutButton));
@@ -53,7 +55,7 @@ public class DashboardPage {
         return new CompliancePage(driver);
     }
 
-    public void getNotificationMsg() {
-        
+    public String getNotificationMsg() {
+        return driver.findElement(By.cssSelector("div.toast-message")).getText();
     }
 }
