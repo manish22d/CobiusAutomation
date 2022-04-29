@@ -4,9 +4,7 @@ import com.cobius.utils.ExcelUtils;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -19,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class AssessmentTest extends BaseTest{
 
     String eventNumber;
-    @BeforeTest
+    @BeforeMethod
     public void login(){
         dashboardPage = loginpage.performLogin(userId,pwd,client);
     }
@@ -32,8 +30,9 @@ public class AssessmentTest extends BaseTest{
 
     @Test(dependsOnMethods = "validateAllLinks")
     public void addComplianceTest() throws IOException {
-        dashboardPage.navigateToCompliancePage().addCompliance().fillComplianceForm(ExcelUtils.getComplianceData());
-        String eventMsg = dashboardPage.getNotificationMsg();
+        compliancePage = dashboardPage.navigateToCompliancePage();
+        compliancePage.addCompliance().fillComplianceForm(ExcelUtils.getComplianceData());
+        String eventMsg = compliancePage.getNotificationMsg();
         System.out.println(eventMsg);
         Pattern pattern = Pattern.compile("[a-z A-Z.]");
         Matcher matcher = pattern.matcher(eventMsg);
@@ -43,15 +42,19 @@ public class AssessmentTest extends BaseTest{
 
     @Test(dependsOnMethods = "addComplianceTest")
     public void verifyEventAvailable(){
-        assertThat("event not available", dashboardPage.navigateToCompliancePage().navigateToSearchPage().searchEvent(eventNumber).checkIfEventAvailable(eventNumber));
+        compliancePage = dashboardPage.navigateToCompliancePage();
+        assertThat("event not available", compliancePage.navigateToSearchPage().searchEvent(eventNumber).checkIfEventAvailable(eventNumber));
     }
 
     @Test(dependsOnMethods = "verifyEventAvailable")
     public void deleteEvent(){
-        dashboardPage.navigateToCompliancePage().navigateToSearchPage().searchEvent(eventNumber).openEventDetails(eventNumber).deleteEvent();
+        compliancePage = dashboardPage.navigateToCompliancePage();
+        compliancePage.navigateToSearchPage().searchEvent(eventNumber).openEventDetails(eventNumber).deleteEvent();
+        System.out.println(compliancePage.getNotificationMsg());
+
     }
 
-    @AfterTest(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void logout() throws InterruptedException {
         dashboardPage.logout();
     }

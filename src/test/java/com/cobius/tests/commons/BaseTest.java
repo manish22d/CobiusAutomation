@@ -2,6 +2,7 @@ package com.cobius.tests.commons;
 
 import com.cobius.core.WebDriverManager;
 import com.cobius.listeners.TestListener;
+import com.cobius.pages.CompliancePage;
 import com.cobius.pages.DashboardPage;
 import com.cobius.pages.LoginPage;
 import com.cobius.utils.PropertyUtils;
@@ -24,6 +25,8 @@ public class BaseTest {
 
     public LoginPage loginpage;
     public DashboardPage dashboardPage;
+
+    public CompliancePage compliancePage;
 
 
 

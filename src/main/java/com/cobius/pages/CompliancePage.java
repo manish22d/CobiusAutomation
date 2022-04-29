@@ -1,6 +1,7 @@
 package com.cobius.pages;
 
 import com.cobius.constant.Constants;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,6 +69,9 @@ public class CompliancePage {
 
     @FindBy(id = "AccountableParty")
     WebElement accountableParty;
+
+    @FindBy(css = "div.toast-message")
+    WebElement notification;
 
     @FindBy(name = "SaveAndClose")
     WebElement saveAndClose;
@@ -143,5 +147,10 @@ public class CompliancePage {
         wait.until(visibilityOf(deleteEventConfirmButton));
         deleteEventConfirmButton.click();
         return this;
+    }
+
+    public String getNotificationMsg() {
+        wait.until(visibilityOf(notification));
+        return notification.getText();
     }
 }
