@@ -102,28 +102,28 @@ public class CompliancePage {
         eventDate.sendKeys(complianceData.get("EventDate"));
         discoveryDate.sendKeys(complianceData.get("DiscoveryDate"));
 
-//        organizationId.click();
+
         new Select(organizationId).selectByVisibleText(complianceData.get("Organization").trim());
         eventSummary.sendKeys(complianceData.get("Event_Summary"));
-//        ownerId.click();
+
         new Select(ownerId).selectByVisibleText(complianceData.get("Owner").trim());
-//        selectedAssignedToIds.click();
-//        wait.until(visibilityOfAllElements(assignIds));
-//        assignIds.forEach(WebElement::getText);
-//        assignIds.stream().filter(ele->ele.getText().trim().equalsIgnoreCase(complianceData.get("Assigned To").trim())).findFirst().get().click();
-//        selectedAssignedToIds.sendKeys(Keys.ESCAPE);
-//        new Select(selectedAssignedToIds).selectByVisibleText(complianceData.get("Assigned To").trim());
+
         wait.until(elementToBeClickable(statusId));
-        statusId.click();
+
         new Select(statusId).selectByVisibleText(complianceData.get("Status").trim());
         duedate.sendKeys(complianceData.get("DueDate"));
         accountableParty.sendKeys(complianceData.get("Accountable_Party"));
+
+        selectedAssignedToIds.click();
+        wait.until(visibilityOfAllElements(assignIds));
+        assignIds.stream().filter(ele->ele.getText().trim().equalsIgnoreCase(complianceData.get("Assigned To").trim())).findFirst().orElseThrow().click();
+
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        saveAndClose.click();
+        saveAndClose.click();
 
     }
 

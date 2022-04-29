@@ -1,7 +1,9 @@
 package com.cobius.tests.commons;
 
 import com.cobius.utils.ExcelUtils;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -28,6 +30,7 @@ public class AssessmentTest extends BaseTest{
     @Test
     public void addComplianceTest() throws IOException {
         dashboardPage.navigateToCompliancePage().addCompliance().fillComplianceForm(ExcelUtils.getComplianceData());
+        dashboardPage.getNotificationMsg();
     }
 
     @Test
@@ -42,8 +45,7 @@ public class AssessmentTest extends BaseTest{
 
     @AfterTest
     public void logout() throws InterruptedException {
-//        ExpectedConditions.alertIsPresent();
-//        driver.switchTo().alert().dismiss();
+
         dashboardPage.logout();
     }
 }

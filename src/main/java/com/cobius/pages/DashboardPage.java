@@ -52,4 +52,8 @@ public class DashboardPage {
         compliancePageLink.click();
         return new CompliancePage(driver);
     }
+
+    public void getNotificationMsg() {
+        
+    }
 }
